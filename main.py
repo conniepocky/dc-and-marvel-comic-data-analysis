@@ -20,6 +20,10 @@ df['name'] = df['name'].str.replace('\([^()]*\)', '', regex=True).str.title()
 
 df = df[df['ID'] != 'Identity Unknown']
 
+df = df[df["ALIGN"] != "Reformed Criminals"]
+
+df = df.reset_index(drop=True)
+
 print(df.head(10))
 
 # distribution of first appearance 
@@ -40,7 +44,7 @@ sns.histplot(marveldf["Year"], bins=20, kde=True, color='orange')
 
 top10 = plt.figure()
 
-colors = ['red', 'blue']
+colors = ['red', 'dodgerblue']
 
 sns.barplot(x='APPEARANCES', y='name', data=df.head(10), hue='Publisher', palette=colors)
 x = df.head(10)['APPEARANCES']
@@ -53,6 +57,13 @@ for index, value in enumerate(x):
     plt.text(value, index,
              str(value))
     
+# good bad and neutral character distribution
+
+goodBadNeutral = plt.figure()
+
+sns.countplot(x='ALIGN', data=df, hue='Publisher', palette=colors)
+
+plt.xlabel("Alignment")
 
 plt.tight_layout()
 plt.show()
