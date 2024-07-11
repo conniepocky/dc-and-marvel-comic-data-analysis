@@ -5,6 +5,8 @@ import seaborn as sns
 dcdf = pd.read_csv('data/dc-wikia-data.csv')
 marveldf = pd.read_csv('data/marvel-wikia-data.csv')
 
+dcdf.rename(columns={'YEAR':'Year'}, inplace=True)
+
 dcdf['Publisher'] = 'DC'
 marveldf['Publisher'] = 'Marvel'
 
@@ -32,7 +34,7 @@ dcFirst = plt.figure()
 
 plt.title("DC Distribution of first appearance by year")
 
-sns.histplot(dcdf["YEAR"], bins=20, kde=True, color='violet')
+sns.histplot(dcdf["Year"], bins=20, kde=True, color='violet')
 
 marvelFirst = plt.figure()
 
@@ -42,7 +44,7 @@ sns.histplot(marveldf["Year"], bins=20, kde=True, color='orange')
 
 #plot the top 10 characters by appearances
 
-top10 = plt.figure()
+top10 = plt.figure(figsize=(10, 5))
 
 colors = ['red', 'dodgerblue']
 
@@ -53,9 +55,13 @@ y = df.head(10)['name']
 plt.ylabel('Name')
 plt.xlabel("Appearances")
 
+plt.yticks(fontsize=8)
+
 for index, value in enumerate(x):
     plt.text(value, index,
              str(value))
+    
+plt.title("Top 10 characters by appearances")
     
 # good bad and neutral character distribution
 
@@ -64,6 +70,7 @@ goodBadNeutral = plt.figure()
 sns.countplot(x='ALIGN', data=df, hue='Publisher', palette=colors)
 
 plt.xlabel("Alignment")
+plt.title("Character Alignment Distribution by Publisher")
 
 plt.tight_layout()
 plt.show()
