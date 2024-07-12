@@ -28,6 +28,10 @@ df = df.reset_index(drop=True)
 
 print(df.head(10))
 
+#graphing
+
+colors = ['red', 'dodgerblue']
+
 # distribution of first appearance 
 
 dcFirst = plt.figure()
@@ -46,8 +50,6 @@ sns.histplot(marveldf["Year"], bins=20, kde=True, color='orange')
 
 top10 = plt.figure(figsize=(10, 5))
 
-colors = ['red', 'dodgerblue']
-
 sns.barplot(x='APPEARANCES', y='name', data=df.head(10), hue='Publisher', palette=colors)
 x = df.head(10)['APPEARANCES']
 y = df.head(10)['name']
@@ -62,6 +64,16 @@ for index, value in enumerate(x):
              str(value))
     
 plt.title("Top 10 characters by appearances")
+
+# trend of year and appearances
+
+yearAppearances = plt.figure()
+
+sns.lineplot(x='Year', y='APPEARANCES', data=df, hue="Publisher", palette=colors)
+
+plt.title('Trend of Appearances Over the Years')
+
+plt.ylabel('Number of Appearances')
     
 # good bad and neutral character distribution
 
@@ -71,6 +83,12 @@ sns.countplot(x='ALIGN', data=df, hue='Publisher', palette=colors)
 
 plt.xlabel("Alignment")
 plt.title("Character Alignment Distribution by Publisher")
+
+#eye colours
+
+eyeColour = plt.figure()
+
+sns.countplot(y='EYE', data=df, palette="deep")
 
 plt.tight_layout()
 plt.show()
